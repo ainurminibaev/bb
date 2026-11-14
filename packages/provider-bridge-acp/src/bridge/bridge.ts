@@ -2658,6 +2658,11 @@ async function startAgentSession(
         permissionMode: params.permissionMode,
       });
     }
+    if (connection.exited) {
+      throw new Error(
+        `ACP agent "${agentLabel}" exited while its session was being set up`,
+      );
+    }
     session.providerThreadId = sessionId;
     bbThreadIdByProviderThreadId.set(sessionId, bbThreadId);
     sendNotification(BRIDGE_NOTIFICATION_METHODS.threadIdentity, {
